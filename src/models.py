@@ -8,23 +8,46 @@ from eralchemy import render_er
 
 Base = declarative_base()
 
-class Person(Base):
-    __tablename__ = 'person'
+class User(Base):
+    __tablename__ = 'User'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
+    username = Column(String(250), nullable=False, unique=True)
+    firstname = Column(String(250), nullable=False)
+    lastname = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False, unique=True)
+    pasword= Column(String(16), nullable=False, unique=True)
+    
 
-class Address(Base):
-    __tablename__ = 'address'
+class Planetas(Base):
+    __tablename__ = 'planetas'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+    id=Column(Integer, primary_key=True)
+    Description_text=Column(String(500),nullable=False)
+    pelicula_id=Column(Integer, ForeignKey('Favoritos.id'))
+    pelicula=relationship(Favoritos)
+
+class personajes(Base):
+    __tablename__="personajes"
+    id=Column(Integer, primary_key=True)
+    Description_text=Column(String(500),nullable=False)
+    pelicula_id=Column(Integer, ForeignKey('Favoritos.id'))
+    pelicula=relationship(Favoritos)
+
+
+class Favoritos(Base):
+    __tablename__="Favoritos"
+    id=Column(Integer, primary_key=True)
+    user_from_id=Column(Integer, ForeignKey('User.id'))
+    user_from=relationship(User)
+    user_to_id=Column(Integer, ForeignKey('User.id'))
+    user_to=relationship(User)
+    Favoritos_pelicula_id=Column(Integer, ForeignKey('User.id'))
+    Favoritos_pelicula=relationship(User)
+    Favoritos_personajes_id=Column(Integer, ForeignKey('User.id'))
+    Favoritos_personajes=relationship(User)
 
     def to_dict(self):
         return {}

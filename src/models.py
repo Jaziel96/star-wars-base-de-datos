@@ -8,8 +8,8 @@ from eralchemy import render_er
 
 Base = declarative_base()
 
-class User(Base):
-    __tablename__ = 'User'
+class user(Base):
+    __tablename__ = 'user'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
@@ -21,6 +21,7 @@ class User(Base):
     fav_personajes = relationship('fav_personajes', backref='user', lazy=True)
     fav_planetas = relationship('fav_planetas', backref='user', lazy=True)
     
+
 
 class planetas(Base):
     __tablename__ = 'planetas'
